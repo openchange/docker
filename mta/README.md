@@ -14,7 +14,7 @@ To create the image `openchange/mta`, execute the following command on the mta f
 
 Run the image:
 
-    docker run -d --name"mta-oc" openchange/mta
+    docker run -d --name "mta-oc" openchange/mta
 
 or use the up.sh script.
 
