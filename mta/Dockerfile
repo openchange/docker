@@ -10,7 +10,8 @@ RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set
 RUN apt-get install -y openssh-server dovecot-imapd postfix
 
 RUN mkdir /var/run/sshd
-ADD dovecot.conf /etc/dovecot/conf.d/99-test.conf
+ADD dovecot.conf /etc/dovecot/dovecot.conf
+ADD dovecot-ldap.conf /etc/dovecot/dovecot-ldap.conf
 ADD postfix.cf /postfix.cf.test
 RUN cat /postfix.cf.test >> /etc/postfix/main.cf && rm /postfix.cf.test
 

@@ -2,4 +2,7 @@ smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth-client
 broken_sasl_auth_clients = yes
 smtpd_sasl_auth_enable = yes
-smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination
+smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, reject_non_fqdn_sender, reject_unknown_sender_domain, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname
+submission_recipient_restrictions = reject_non_fqdn_sender, reject_non_fqdn_recipient, permit_sasl_authenticated, permit_mynetworks, reject
+smtpd_restriction_classes = submission_recipient_restrictions
+
