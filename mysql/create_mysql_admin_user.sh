@@ -7,7 +7,7 @@ fi
 
 /usr/bin/mysqld_safe > /dev/null 2>&1 &
 
-PASS="root"
+PASS=""
 echo "=> Creating MySQL admin user with preset password"
 RET=1
 while [[ RET -ne 0 ]]; do
@@ -15,6 +15,8 @@ while [[ RET -ne 0 ]]; do
 	mysql -uroot -e "status" > /dev/null 2>&1
 	RET=$?
 done
+
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION"
 
 mysql -uroot -e "CREATE USER 'admin'@'%' IDENTIFIED BY '$PASS'"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION"
