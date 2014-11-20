@@ -12,15 +12,18 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --force-yes openchange
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes samba openchangeserver
 
-RUN apt-get install -y --force-yes python-mysqldb
-
 # Helpers for development
 RUN apt-get install -y --force-yes mysql-client
+
+# Openchange packages
+RUN apt-get install -y --force-yes samba openchangeserver sogo-openchange
+RUN apt-get build-dep -y --force-yes openchange
 
 VOLUME ["/openchange"]
 
 # Samba conf file enabling OpenChange
 ADD smb.conf /etc/samba/smb.conf
+ADD sogo.conf /etc/sogo/sogo.conf
 
 # MAPI needed ports
 EXPOSE 135 389 1024
