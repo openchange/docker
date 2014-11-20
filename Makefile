@@ -30,7 +30,7 @@ restserver: .restserver-build-docker
 restserver-build: .restserver-autogen
 	docker exec -it oc-restserver /bin/sh -c " \
        cd /openchange && \
-       make datadir=/usr/share/openchange LDFLAGS='-Wl,--as-needed' DSOOPT='-Wl,--as-needed -shared -fPIC' install"
+       make datadir=/usr/share/openchange LDFLAGS='-Wl,--as-needed' DSOOPT='-Wl,--as-needed -shared -fPIC' install pyopenchange-install"
 
 openchange: .openchange-build-docker
 	docker rm oc-openchange || true
@@ -43,7 +43,7 @@ openchange: .openchange-build-docker
 
 openchange-provision:
 	docker exec -it oc-openchange /bin/sh -c -x " \
-       sed -i -e s/MYSQL_HOST/$(MYSQL_HOST)/g -e s/MYSQL_PASSWORD/$(MYSQL_ROOT_PASSWORD)/g /etc/samba/smb.conf /etc/sogo/sogo.conf && \
+       sed -i -e s/MYSQL_HOST/$(MYSQL_HOST)/g -e s/MYSQL_PASSWORD/$(MYSQL_ROOT_PASSWORD)/g /etc/samba/smb.conf && \
        /usr/bin/samba-tool domain provision --realm=zentyal.lan \
                                             --domain=zentyal \
                                             --adminpass='foobar1!' \
@@ -56,7 +56,8 @@ openchange-provision:
                                                        --min-pwd-age=0 \
                                                        --max-pwd-age=365 && \
        /usr/bin/samba-tool user create openchange openchange && \
-       /usr/sbin/openchange_newuser --enable --create openchange"
+       /usr/sbin/openchange_newuser --enable --create openchange && \
+       cat /openchange_provision.sql | mysql -h $(MYSQL_HOST) -u root -p$(MYSQL_ROOT_PASSWORD) openchange"
 
 .openchange-autogen:
 	docker exec -it oc-openchange /bin/sh -c " \
@@ -67,7 +68,7 @@ openchange-provision:
 openchange-build: .openchange-autogen
 	docker exec -it oc-openchange /bin/sh -c -x " \
        cd /openchange && \
-       make datadir=/usr/share/openchange LDFLAGS='-Wl,--as-needed' DSOOPT='-Wl,--as-needed -shared -fPIC' install && \
+       make datadir=/usr/share/openchange LDFLAGS='-Wl,--as-needed' DSOOPT='-Wl,--as-needed -shared -fPIC' install pyopenchange-install && \
        ln -sf /openchange/mapiproxy/libmapistore/backends/python/rest.py /usr/lib/python2.7/dist-packages/openchange/backends/ && \
        echo [rest] > /usr/lib/python2.7/dist-packages/openchange/backends/config.ini && \
        echo base_url = http://$(RESTSERVER_HOST):5001 >> /usr/lib/python2.7/dist-packages/openchange/backends/config.ini"

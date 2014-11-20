@@ -9,21 +9,21 @@ RUN echo "deb-src http://archive.zentyal.org/zentyal 4.0 main" >> /etc/apt/sourc
 RUN wget -q http://keys.zentyal.org/zentyal-4.0-archive.asc -O- | apt-key add -
 RUN apt-get update
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --force-yes openchange
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes samba openchangeserver
+apt-get build-dep -y --force-yes openchange
+apt-get install -y --force-yes samba openchangeserver
 
 # Helpers for development
 RUN apt-get install -y --force-yes mysql-client
 
 # Openchange packages
-RUN apt-get install -y --force-yes samba openchangeserver sogo-openchange
-RUN apt-get build-dep -y --force-yes openchange
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes samba openchangeserver python-requests python-tz python-mysqldb
+RUN DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --force-yes openchange
 
 VOLUME ["/openchange"]
 
 # Samba conf file enabling OpenChange
 ADD smb.conf /etc/samba/smb.conf
-ADD sogo.conf /etc/sogo/sogo.conf
+ADD openchange_provision.sql /openchange_provision.sql
 
 # MAPI needed ports
 EXPOSE 135 389 1024
