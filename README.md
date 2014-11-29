@@ -42,6 +42,12 @@ container:
 
     * make restserver-build
 
-To run the REST server, go to `oc-restserver` container:
+To run the REST server, go to `oc-restserver` container and run:
 
-    > python /openchange/python/mock/rest/api_server.py
+    > API_SERVER_SETTINGS=/etc/rest_server/settings.cfg python /openchange/python/mock/rest/api_server.py
+
+Note
+----
+
+To run these commands without `sudo` it is required to have your user
+in *docker* group, restart docker service and restart user session.
