@@ -15,6 +15,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes python-flask p
 
 VOLUME ["/openchange"]
 
+ADD settings.cfg /etc/rest_server/settings.cfg
+
 EXPOSE 5001
 
 ENTRYPOINT /bin/bash
