@@ -19,32 +19,17 @@ To create mysql docker container:
 
     * make mysql
 
-To create the images and run the containers for REST server and
-OpenChange server:
+To build from source and launch the REST server:
 
     * make restserver
+
+To build from source, provision and launch OpenChange server:
+
     * make openchange
 
-To provision samba and openchange
 
-    * make openchange-provision
-
-To compile in openchange container (`oc-openchange`):
-
-    * make openchange-build
-
-To run samba daemon, go to `oc-openchange` container:
-
-    > samba -d5 -i
-
-To compile the OpenChange Python bindings in `oc-restserver`
-container:
-
-    * make restserver-build
-
-To run the REST server, go to `oc-restserver` container and run:
-
-    > API_SERVER_SETTINGS=/etc/rest_server/settings.cfg python /openchange/python/mock/rest/api_server.py
+That should leave your system ready to connect to the OpenChange instance on
+the `oc-openchange` container
 
 Note
 ----
