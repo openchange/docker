@@ -3,6 +3,8 @@ MYSQL_HOST=$(DB_PORT_3306_TCP_ADDR)
 RESTSERVER_HOST=$(RESTSERVER_PORT_5001_TCP_ADDR)
 OPENCHANGE_SRC=/openchange
 
+.PHONY: openchange restserver run
+
 openchange: install provision run
 
 restserver: install
@@ -26,7 +28,7 @@ provision:
 	/usr/bin/samba-tool user create openchange openchange
 	/usr/sbin/openchange_newuser --enable --create openchange
 	cat /openchange_provision.sql | mysql -h $(MYSQL_HOST) -u root -p$(MYSQL_ROOT_PASSWORD) openchange
-
+	/usr/lib/python2.7/dist-packages/openchange/backends/rest.py --provision --username=openchange
 
 .openchange-autogen:
 	cd /openchange && \
