@@ -1,22 +1,38 @@
 openchange-docker
-======================
+=================
 
-This is the source to build a Docker image that will let you run temporary IMAP
-and SMTP servers sandboxed on your local machine, in a way compatible with
-Openchange.
+This is the source to build an scenario to run OpenChange with REST
+API backend with the following containers:
+
+    * `oc-mysql`: MySQL server
+    * `oc-restserver`: RESTful API Server
+    * `oc-openchange`: Samba and OpenChange Server
+
+Make sure to have OpenChange source in `jkerihuel/mapistore-python`
+branch in the `../openchange` directory and get the latest docker
+software installed.
 
 Usage
 -----
 
-To create the all the images needed at once use the script  `build-images.sh`
+To create mysql docker container:
 
-Run the images:
+    * make mysql
 
-    run.sh
+To build from source and launch the REST server:
 
-Warning!: Sometimes the sogo image doesn't run properly from this script, you need to stop it and run it again only to that one so it works and connects well to the mysql database.
+    * make restserver
 
-When you're done testing, stop the images running:
+To build from source, provision and launch OpenChange server:
 
-    stop.sh
+    * make openchange
 
+
+That should leave your system ready to connect to the OpenChange instance on
+the `oc-openchange` container
+
+Note
+----
+
+To run these commands without `sudo` it is required to have your user
+in *docker* group, restart docker service and restart user session.
