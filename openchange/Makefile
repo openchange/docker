@@ -9,7 +9,7 @@ openchange: install provision run
 
 restserver: install
 	echo HOST=\"0.0.0.0\" > /restserver.cfg
-	API_SERVER_SETTINGS=/restserver.cfg python /usr/lib/python2.7/dist-packages/mock/rest/api_server.py
+	API_SERVER_SETTINGS=/restserver.cfg python /openchange/python/mock/rest/api_server.py
 
 provision:
 	set -x -e
