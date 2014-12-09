@@ -25,5 +25,3 @@ ADD Makefile /
 
 # MAPI needed ports
 EXPOSE 135 389 1024 5001
-
-ENTRYPOINT /bin/bash

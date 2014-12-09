@@ -13,7 +13,8 @@ restserver:
 	docker build --tag openchange openchange
 	docker run --name oc-restserver --rm=true \
                --volume "$(OPENCHANGE_SRC):/openchange" \
-               --interactive --tty openchange
+               --interactive --tty openchange \
+               /bin/bash -c "make restserver; bash"
 
 openchange:
 	@docker rm oc-openchange || true
@@ -24,4 +25,5 @@ openchange:
                --link oc-restserver:restserver \
                --rm=true \
                --volume "$(OPENCHANGE_SRC):/openchange" \
-               --interactive --tty openchange
+               --interactive --tty openchange \
+               /bin/bash -c "make openchange; bash"
