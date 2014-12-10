@@ -8,7 +8,7 @@ OPENCHANGE_SRC=/openchange
 openchange: install provision run
 
 restserver: install
-	echo HOST=\"0.0.0.0\" > /restserver.cfg
+	echo 'HOST="0.0.0.0"' > /restserver.cfg
 	API_SERVER_SETTINGS=/restserver.cfg python /openchange/python/mock/rest/api_server.py
 
 provision:

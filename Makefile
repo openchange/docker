@@ -8,17 +8,15 @@ mysql:
 	docker rm oc-mysql || true
 	docker run --name oc-mysql --env MYSQL_ROOT_PASSWORD="$(MYSQL_ROOT_PASSWORD)" --detach mysql
 
-restserver:
+restserver: build
 	@docker rm oc-restserver || true
-	docker build --tag openchange openchange
 	docker run --name oc-restserver --rm=true \
                --volume "$(OPENCHANGE_SRC):/openchange" \
                --interactive --tty openchange \
                /bin/bash -c "make restserver; bash"
 
-openchange:
+openchange: build
 	@docker rm oc-openchange || true
-	docker build --tag openchange openchange
 	docker run --name oc-openchange \
                -e MYSQL_ROOT_PASSWORD="$(MYSQL_ROOT_PASSWORD)" \
                --link oc-mysql:db \
@@ -27,3 +25,9 @@ openchange:
                --volume "$(OPENCHANGE_SRC):/openchange" \
                --interactive --tty openchange \
                /bin/bash -c "make openchange; bash"
+
+build:
+	docker build --tag openchange $(NO_CACHE) openchange
+
+build-force: NO_CACHE=--no-cache=true
+build-force: build
