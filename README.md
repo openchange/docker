@@ -4,9 +4,9 @@ openchange-docker
 This is the source to build an scenario to run OpenChange with REST
 API backend with the following containers:
 
-    * `oc-mysql`: MySQL server
-    * `oc-restserver`: RESTful API Server
-    * `oc-openchange`: Samba and OpenChange Server
+* `oc-mysql`: MySQL server
+* `oc-restserver`: RESTful API Server
+* `oc-openchange`: Samba and OpenChange Server
 
 Make sure to have OpenChange source in `jkerihuel/mapistore-python`
 branch in the `../openchange` directory and get the latest docker
@@ -17,15 +17,15 @@ Usage
 
 To create mysql docker container:
 
-    * make mysql
+    $ make mysql
 
 To build from source and launch the REST server:
 
-    * make restserver
+    $ make restserver
 
 To build from source, provision and launch OpenChange server:
 
-    * make openchange
+    $ make openchange
 
 
 That should leave your system ready to connect to the OpenChange instance on
