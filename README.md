@@ -41,11 +41,13 @@ running:
 
 	$ docker inspect oc-openchange | grep IPAddress
 
-For instance, if our container's address is
-`172.17.0.2`, we will have to add to the *hosts* file the following line:
+For instance, if our container's address is `172.17.0.2`, we will have to add
+to the *hosts* file the following line:
 
     172.17.0.2                openchange.zentyal.lan
 
+Another way of establishing this connection is by changing the DNS server
+address of your Windows machine to the `oc-openchange` container's address.
 
 Apply changes
 -------------
@@ -72,6 +74,7 @@ The REST API backend can be deprovisioned and reprovisioned by killing the
 Samba process in `oc-openchange` and running:
 
     $ /usr/lib/python2.7/dist-packages/openchange/backends/rest.py --deprovision --username=openchange
+    $ /usr/lib/python2.7/dist-packages/openchange/backends/rest.py --provision --username=openchange
     $ make run
 
 Note
