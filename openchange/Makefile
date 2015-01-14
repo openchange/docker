@@ -9,6 +9,7 @@ openchange: install provision run
 
 restserver: install
 	echo 'HOST="0.0.0.0"' > /restserver.cfg
+	rm -f /openchange/python/mock/rest/temp/*
 	API_SERVER_SETTINGS=/restserver.cfg python /openchange/python/mock/rest/api_server.py
 
 provision:
@@ -28,6 +29,7 @@ provision:
 	/usr/bin/samba-tool user create openchange openchange
 	/usr/sbin/openchange_newuser --enable --create openchange
 	cat /openchange_provision.sql | mysql -h $(MYSQL_HOST) -u root -p$(MYSQL_ROOT_PASSWORD) openchange
+	/usr/lib/python2.7/dist-packages/openchange/backends/rest.py --deprovision --username=openchange
 	/usr/lib/python2.7/dist-packages/openchange/backends/rest.py --provision --username=openchange
 
 .openchange-autogen:
