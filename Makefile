@@ -20,6 +20,7 @@ openchange:
 	@docker rm oc-openchange || true
 	docker build --tag openchange openchange
 	docker run --name oc-openchange \
+	       -h openchange \
                -e MYSQL_ROOT_PASSWORD="$(MYSQL_ROOT_PASSWORD)" \
                --link oc-mysql:db \
                --link oc-restserver:restserver \
